@@ -2,15 +2,17 @@
 
 ## Build & Run
 
-Not yet configured. Update this file once the tech stack is chosen.
+Not yet configured. Update this once the tech stack is chosen.
 
-Expected pattern:
 ```bash
-# Install dependencies
-npm install   # or pip install, cargo build, etc.
+# Install
+npm install
 
-# Run locally
-PORT=3000 npm start   # must respect $PORT env var for Railway
+# Run locally (MUST respect $PORT)
+PORT=3000 npm start
+
+# Build (for deploy verification)
+npm run build
 
 # Run tests
 npm test
@@ -18,18 +20,17 @@ npm test
 
 ## Deployment
 
-- Platform: Railway (auto-deploys from main branch)
-- The app MUST read the port from `$PORT` environment variable
-- Include a Dockerfile or ensure Nixpacks can auto-detect the stack
-- Health check: Railway will hit the root URL
+- Railway auto-deploys from main branch
+- App MUST read port from $PORT environment variable
+- Include Dockerfile or ensure Nixpacks auto-detects the stack
 
-## Validation Checklist (run before committing)
+## Validation (run before committing)
 
-1. App builds without errors
-2. App starts and responds on $PORT
-3. Tests pass (if tests exist)
-4. No TypeScript/lint errors (if applicable)
+1. Build passes: `npm run build`
+2. App starts on $PORT: `PORT=3000 npm start`
+3. Tests pass: `npm test`
+4. No lint/type errors
 
 ## Operational Notes
 
-(Update this section with learnings about how to build/run/debug the project)
+(Update with learnings about building/running/debugging)

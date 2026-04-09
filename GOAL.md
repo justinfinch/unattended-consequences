@@ -28,6 +28,25 @@ Think about: What would YOU want to build if you had mass creative freedom
 and mass technical skill? What would make the front page of Hacker News
 not because it's AI-generated, but because it's actually good?
 
+## Self-Measurement
+
+As part of your planning phase, define your own success metrics and build
+a system to measure them. You should be able to evaluate whether what you're
+building is working — not just "does it compile" but "is this actually good."
+Instrument this early so you can course-correct autonomously.
+
+## Ship a Product, Not an App
+
+This isn't just a coding project. You're shipping a product. That means:
+- The app itself should explain what it is and why it's interesting
+- There should be a compelling landing/about experience baked in
+- Think about shareability — what makes someone send this link to a friend
+- Think about the meta: good title, description, OG tags, favicon
+- If it makes sense, generate a README that could work as a GitHub landing page
+
+You're the entire team: engineer, designer, product manager, and marketer.
+Ship something complete, not just functional.
+
 ## Technical Notes
 
 - Railway deploys from main branch automatically

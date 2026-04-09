@@ -7,8 +7,8 @@ Claude gets full creative freedom to build something novel, deployed to Railway.
 
 ```bash
 # 1. Create a new repo and clone it
-gh repo create ralph-weekend --public --clone
-cd ralph-weekend
+gh repo create unattended-consequences --public --clone
+cd unattended-consequences
 
 # 2. Copy these files into the repo
 # (copy all files from this scaffold)
@@ -25,46 +25,25 @@ chmod +x loop.sh
 ./loop.sh             # Then: let Claude build it
 ```
 
-## Skills to Install
+## Plugins to Install
 
 These give Ralph a "team" of domain expertise to draw on automatically.
+Install from within Claude Code using `/plugin install`.
 
 ### Required
 
-```bash
-# Anthropic's official frontend design skill — prevents generic AI aesthetic
-npx skills add anthropics/claude-code --skill frontend-design
-
-# UI Skills pack — baseline polish, a11y, motion, metadata
-npx ui-skills add baseline-ui
-npx ui-skills add fixing-accessibility
-npx ui-skills add fixing-motion-performance
 ```
+# Feature development workflow — explore, architect, implement, review
+/plugin install feature-dev@claude-plugins-official --scope project
 
-### Recommended
-
-```bash
-# Bencium's UX Designer — deep UX design fundamentals (innovative variant)
-npx skills add bencium/bencium-claude-code-design-skill
-
-# Owl-Listener designer skills — research, strategy, prototyping, design ops
-/plugin marketplace add Owl-Listener/designer-skills
-
-# Webapp testing — Playwright-based UI verification
-npx skills add anthropics/claude-code --skill webapp-testing
-```
-
-### Optional but Fun
-
-```bash
-# Excalidraw diagrams — architecture/flow visualization
-npx skills add coleam00/excalidraw-diagram-skill --skill excalidraw-diagram
+# Frontend design — prevents generic AI aesthetic, adds bold design choices
+/plugin install frontend-design@claude-plugins-official --scope project
 ```
 
 ## File Structure
 
 ```
-ralph-weekend/
+unattended-consequences/
 ├── loop.sh                    # The Ralph loop script
 ├── PROMPT_plan.md             # Planning mode prompt
 ├── PROMPT_build.md            # Building mode prompt

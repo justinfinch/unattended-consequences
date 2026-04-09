@@ -1,0 +1,40 @@
+{
+  "name": "Unattended Consequences",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "20" },
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.12" },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  "mounts": ["source=claude-memory,target=/home/vscode/.claude,type=volume"],
+
+  "postCreateCommand": "/bin/bash .devcontainer/post-create.sh",
+
+  "containerEnv": {
+    "PORT": "3000"
+  },
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "RAILWAY_TOKEN": "${localEnv:RAILWAY_TOKEN}",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  },
+
+  "forwardPorts": [3000, 5173, 8080],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens"
+      ]
+    }
+  },
+
+  "shutdownAction": "none",
+  "remoteUser": "vscode"
+}
