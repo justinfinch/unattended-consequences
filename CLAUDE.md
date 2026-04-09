@@ -15,7 +15,15 @@ designs a DDD-based solution, and builds it on Railway.
 
 ## Current Status
 
-Not started. Run planning mode to research a problem and create specs.
+**TradeFlow** — Job management for service trades (plumbers, electricians, cleaners).
+Planning complete. Ready to implement Phase 1 (Deployable Skeleton).
+
+- `specs/concept.md` — Problem definition and solution design
+- `specs/architecture.md` — Full DDD domain model (5 bounded contexts, aggregates, events)
+- `specs/aesthetic.md` — Design language, colors, typography, component patterns
+- `IMPLEMENTATION_PLAN.md` — Four-phase build plan
+
+Tech stack: TypeScript, Fastify, PostgreSQL, Drizzle ORM, HTMX + Handlebars, Tailwind CSS
 
 ## Rules
 

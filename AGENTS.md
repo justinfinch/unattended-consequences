@@ -2,8 +2,6 @@
 
 ## Build & Run
 
-Not yet configured. Update this once the tech stack is chosen.
-
 ```bash
 # Install
 npm install
@@ -16,13 +14,31 @@ npm run build
 
 # Run tests
 npm test
+
+# Run database migrations
+npm run db:migrate
+
+# Generate a migration from schema changes
+npm run db:generate
 ```
+
+## Tech Stack
+
+- **Runtime:** Node.js (LTS) + TypeScript (strict mode)
+- **Framework:** Fastify
+- **Database:** PostgreSQL (single instance, schema-per-context)
+- **ORM:** Drizzle ORM + Drizzle Kit for migrations
+- **Frontend:** HTMX + Handlebars (server-rendered), Tailwind CSS
+- **Auth:** Lucia (session-based)
+- **Testing:** Vitest
+- **Validation:** Zod (at API boundary)
 
 ## Deployment
 
-- Railway auto-deploys from the current branch (each product branch has its own Railway service)
-- App MUST read port from $PORT environment variable
-- Include Dockerfile or ensure Nixpacks auto-detects the stack
+- Railway auto-deploys from `product-alpha` branch
+- App MUST read port from `$PORT` environment variable
+- Dockerfile in project root
+- Railway auto-provides: `PORT`, `DATABASE_URL`
 
 ## Validation (run before committing)
 
@@ -33,15 +49,29 @@ npm test
 
 ## DDD Structure
 
-Once the tech stack is chosen, the project should follow this layering:
-
 ```
 src/
-  domain/          # Aggregates, entities, value objects, domain events, repository interfaces
-  application/     # Application services, command/query handlers, DTOs
-  infrastructure/  # Repository implementations, adapters, DTU twins, ACLs
-  presentation/    # Routes, controllers, views, API endpoints
+  shared/               # Shared kernel (base classes, common value objects, infra)
+  job-management/       # Core domain — job lifecycle, quoting, scheduling
+  billing/              # Supporting — invoices, payments
+  customer/             # Supporting — customer records, service locations
+  notification/         # Generic — message delivery
+  identity/             # Generic — auth, multi-tenancy
+  dtu/                  # DTU twins for dev (email, payments, file storage)
 ```
+
+Each context follows: `domain/` → `application/` → `infrastructure/` → `interface/`
+
+## Bounded Context Schemas
+
+Each context owns its own PostgreSQL schema:
+- `identity.*` — users, businesses
+- `customer.*` — customers, service_locations
+- `job_management.*` — jobs, quotes, notes, photos, materials
+- `billing.*` — invoices, payments
+- `notification.*` — messages, delivery attempts
+
+Contexts communicate via domain events, never cross-schema joins.
 
 ## Operational Notes
 
