@@ -36,7 +36,7 @@
      aggregates enforce their invariants, events are explicit
 
 4. ONLY when verification passes: update @IMPLEMENTATION_PLAN.md, then
-   git add relevant files, git commit with a descriptive message, git push origin main.
+   git add relevant files, git commit with a descriptive message, git push.
    Do NOT commit if the build is broken.
 
 == FEEDBACK LOOP ==

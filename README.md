@@ -33,15 +33,43 @@ it on Railway. No human in the loop during execution.
   development. Human connects real services later via `HUMAN_TASKS.md`.
 - **Open-source infrastructure** — self-hosted wherever possible, containerized
 
+## Branching Model
+
+`main` is the reusable template — loop scripts, prompts, and project scaffolding.
+Each product lives on its own branch that diverges permanently from main.
+
+```
+main (template)
+├── product-invoicely    (diverges, never merges back)
+├── product-bookkeeper   (diverges, never merges back)
+└── product-schedulr     (diverges, never merges back)
+```
+
+### Spawning a new product
+
+```bash
+git checkout -b product-<name> main
+# Create a Railway service pointing at this branch
+./loop.sh plan        # Claude researches and picks a problem
+./loop.sh             # Claude builds it
+```
+
+Each product branch gets its own Railway service configured to deploy from
+that branch. The loop pushes to whatever branch it's on — no merge to main.
+
+Feature branches off a product branch are fine if the loop wants them.
+
 ## Quick Start
 
 ```bash
 # 1. Set up environment (devcontainer handles this)
-# 2. Plan
+# 2. Create a product branch
+git checkout -b product-<name> main
+# 3. Plan
 ./loop.sh plan
-# 3. Build
+# 4. Build
 ./loop.sh
-# 4. Monitor
+# 5. Monitor
 tail -f ralph-*.log
 ```
 

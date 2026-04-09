@@ -46,7 +46,7 @@ relationships.
 
 ## Deployment
 
-- Railway auto-deploys from main branch
+- Railway auto-deploys from the current branch (each product gets its own Railway service)
 - App must read port from $PORT environment variable
 - Include a Dockerfile or Nixpacks-compatible setup
 - Keep dependencies minimal

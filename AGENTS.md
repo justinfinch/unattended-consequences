@@ -20,7 +20,7 @@ npm test
 
 ## Deployment
 
-- Railway auto-deploys from main branch
+- Railway auto-deploys from the current branch (each product branch has its own Railway service)
 - App MUST read port from $PORT environment variable
 - Include Dockerfile or ensure Nixpacks auto-detects the stack
 
