@@ -31,6 +31,18 @@ npm test
 3. Tests pass: `npm test`
 4. No lint/type errors
 
+## DDD Structure
+
+Once the tech stack is chosen, the project should follow this layering:
+
+```
+src/
+  domain/          # Aggregates, entities, value objects, domain events, repository interfaces
+  application/     # Application services, command/query handlers, DTOs
+  infrastructure/  # Repository implementations, adapters, DTU twins, ACLs
+  presentation/    # Routes, controllers, views, API endpoints
+```
+
 ## Operational Notes
 
 (Update with learnings about building/running/debugging)

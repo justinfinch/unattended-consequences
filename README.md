@@ -1,79 +1,54 @@
-# Ralph Weekend Experiment
+# Unattended Consequences
 
-Autonomous creative coding loop using the Ralph Wiggum technique.
-Claude gets full creative freedom to build something novel, deployed to Railway.
+Autonomous coding experiment. Claude Code runs in a loop — researching a
+real small business pain point, designing a DDD-based solution, and building
+it on Railway. No human in the loop during execution.
+
+## How It Works
+
+1. `./loop.sh plan` — Claude researches small business pain points, picks one,
+   designs a domain model, writes specs, and creates an implementation plan
+2. `./loop.sh` — Claude picks the next task, implements it (with DDD layering,
+   tests, and self-review), commits, and pushes. Railway auto-deploys.
+3. Repeat until you check the URL.
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `GOAL.md` | Mission brief and engineering philosophy |
+| `specs/` | Concept, architecture (domain model), aesthetic direction |
+| `IMPLEMENTATION_PLAN.md` | Prioritized task list (Claude generates/updates) |
+| `HUMAN_TASKS.md` | Things only a human can do (account setup, API keys) |
+| `LOOP_LOG.md` | Claude's running self-assessment across iterations |
+| `AGENTS.md` | How to build, run, test |
+| `PROMPT_plan.md` | Planning mode prompt |
+| `PROMPT_build.md` | Build mode prompt |
+
+## Engineering Approach
+
+- **Domain-Driven Design** (Evans/Vernon) — ubiquitous language, rich domain
+  models, bounded contexts, domain events, anti-corruption layers
+- **DTU Twins** — behavioral clones of third-party services for autonomous
+  development. Human connects real services later via `HUMAN_TASKS.md`.
+- **Open-source infrastructure** — self-hosted wherever possible, containerized
 
 ## Quick Start
 
 ```bash
-# 1. Create a new repo and clone it
-gh repo create unattended-consequences --public --clone
-cd unattended-consequences
-
-# 2. Copy these files into the repo
-# (copy all files from this scaffold)
-
-# 3. Install skills (see below)
-
-# 4. Initialize git + Railway
-git init && git add -A && git commit -m "initial scaffold"
-railway link   # or railway init
-
-# 5. Run Ralph
-chmod +x loop.sh
-./loop.sh plan        # First: let Claude plan what to build
-./loop.sh             # Then: let Claude build it
+# 1. Set up environment (devcontainer handles this)
+# 2. Plan
+./loop.sh plan
+# 3. Build
+./loop.sh
+# 4. Monitor
+tail -f ralph-*.log
 ```
-
-## Plugins to Install
-
-These give Ralph a "team" of domain expertise to draw on automatically.
-Install from within Claude Code using `/plugin install`.
-
-### Required
-
-```
-# Feature development workflow — explore, architect, implement, review
-/plugin install feature-dev@claude-plugins-official --scope project
-
-# Frontend design — prevents generic AI aesthetic, adds bold design choices
-/plugin install frontend-design@claude-plugins-official --scope project
-```
-
-## File Structure
-
-```
-unattended-consequences/
-├── loop.sh                    # The Ralph loop script
-├── PROMPT_plan.md             # Planning mode prompt
-├── PROMPT_build.md            # Building mode prompt
-├── CLAUDE.md                  # Project context (Claude updates this)
-├── AGENTS.md                  # Operational guide (Claude updates this)
-├── IMPLEMENTATION_PLAN.md     # Task list (Claude generates/updates)
-├── GOAL.md                    # Creative brief — the only human input
-├── railway.json               # Railway deployment config
-├── .claude/
-│   └── settings.local.json    # Claude Code permissions
-└── README.md                  # This file
-```
-
-## How It Works
-
-1. `loop.sh plan` — Claude reads GOAL.md, decides what to build, writes specs + plan
-2. `loop.sh` — Claude reads plan, picks most important task, builds it, commits, pushes
-3. Railway auto-deploys from main
-4. Repeat until you wake up and check the URL
 
 ## Monitoring
 
-- Watch `ralph.log` for real-time output
+- Watch `ralph-*.log` for real-time output
 - Check Railway dashboard for deploy status
-- Read `IMPLEMENTATION_PLAN.md` to see what Claude has been doing
-- Read `CLAUDE.md` for Claude's self-documented learnings
-
-## Emergency Controls
-
-- `Ctrl+C` — stop the loop
-- `git reset --hard HEAD~N` — revert N commits
-- `./loop.sh plan` — regenerate the plan from scratch
-- Delete `IMPLEMENTATION_PLAN.md` and re-plan if Ralph goes off the rails
+- Read `LOOP_LOG.md` for Claude's self-assessment
+- Read `IMPLEMENTATION_PLAN.md` to see what's planned/done
+- Read `HUMAN_TASKS.md` for things that need your attention

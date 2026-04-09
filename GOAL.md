@@ -1,55 +1,85 @@
 # Creative Brief
 
-You have mass creative freedom. Build something novel, surprising, and genuinely fun
-that lives at a public URL and makes strangers say "wait, this is cool."
+## Mission
 
-## Constraints
+Research and identify a genuine pain point for small businesses, then build
+a web application that solves it. The app should be something a small business
+owner would actually pay for.
 
-- Single self-contained web app deployable to Railway
-- Must work in a browser with no login required
-- Should be something that gets MORE interesting the longer you work on it
-- Should showcase genuine craft — typography, motion, spatial composition, color
-- Should feel like something a human would bookmark and share
+You are the researcher, product manager, architect, designer, and engineer.
+You pick the problem. You design the solution. You build it.
 
-## What NOT to Build
+## Engineering Philosophy: Domain-Driven Design
 
-- Not a todo app, not a chatbot wrapper, not a dashboard
-- Not something that looks like every other AI-generated landing page
-- Not something that requires API keys or external services to function
-- Not something boring
+This project follows DDD as practiced by Eric Evans and Vaughn Vernon.
+The code should read like the business domain, not like a framework tutorial.
 
-## What Makes This Special
+Core principles:
 
-You are the creative director, architect, designer, and engineer.
-You decide the concept. You decide the tech stack. You decide the aesthetic.
-The only requirement is that it's genuinely novel and well-crafted.
+- **Ubiquitous language** — names in code match the business domain exactly.
+  If the domain calls it an "invoice," the code calls it an Invoice, not a
+  BillingRecord or PaymentDocument.
+- **Rich domain models** — behavior lives on entities and aggregates, not in
+  anemic service classes. An Order knows how to apply a discount. A Booking
+  knows whether it conflicts with another.
+- **Bounded contexts** — clear boundaries between subdomains. Each context has
+  its own models, language, and rules. Don't let one context leak into another.
+- **Domain events** — state changes are explicit events, not side effects.
+  OrderPlaced, InvoiceSent, AppointmentCancelled. These drive workflows.
+- **Anti-corruption layers** — external services (real or DTU twins) get their
+  own translation layer. The domain never speaks in third-party API shapes.
 
-Think about: What would YOU want to build if you had mass creative freedom
-and mass technical skill? What would make the front page of Hacker News
-not because it's AI-generated, but because it's actually good?
+The domain model must be designed before code is written. specs/architecture.md
+must include: aggregates, entities, value objects, bounded contexts, and their
+relationships.
+
+## Infrastructure Philosophy
+
+- Open-source and self-hosted wherever possible
+- When a third-party service is needed (payments, email, OAuth providers),
+  build a DTU twin — a behavioral clone of the service's API — to develop
+  and test against. Document the real service integration as a human task
+  in HUMAN_TASKS.md with clear setup instructions.
+- Social auth (Google, GitHub) is acceptable
+- The DTU twin sits behind an anti-corruption layer. When a human later
+  connects the real service, only the adapter changes — the domain is untouched.
+
+## Deployment
+
+- Railway auto-deploys from main branch
+- App must read port from $PORT environment variable
+- Include a Dockerfile or Nixpacks-compatible setup
+- Keep dependencies minimal
+
+## Product Quality
+
+This isn't just a coding project. Ship a product:
+
+- The app should explain what it is and why it's interesting
+- Compelling landing/about experience baked in
+- Good title, description, OG tags, favicon
+- Think about the first-run experience for a new user
+- Craft matters — typography, spacing, color, motion
 
 ## Self-Measurement
 
-As part of your planning phase, define your own success metrics and build
-a system to measure them. You should be able to evaluate whether what you're
-building is working — not just "does it compile" but "is this actually good."
-Instrument this early so you can course-correct autonomously.
+Define success metrics early based on the problem you choose to solve.
+These should be concrete and tied to the domain:
 
-## Ship a Product, Not an App
+- Does the app actually solve the stated problem end-to-end?
+- Can a user complete the core workflow without confusion?
+- Is the domain model clean — aggregates cohesive, boundaries clear?
+- Are DTU twins faithful enough to develop against with confidence?
 
-This isn't just a coding project. You're shipping a product. That means:
-- The app itself should explain what it is and why it's interesting
-- There should be a compelling landing/about experience baked in
-- Think about shareability — what makes someone send this link to a friend
-- Think about the meta: good title, description, OG tags, favicon
-- If it makes sense, generate a README that could work as a GitHub landing page
+## Feedback Loop
 
-You're the entire team: engineer, designer, product manager, and marketer.
-Ship something complete, not just functional.
+After each build iteration, write a brief self-assessment to LOOP_LOG.md:
+what was built, what's working, what feels off, what should be next.
+This gives future iterations context beyond the task list.
 
-## Technical Notes
+## Human Tasks
 
-- Railway deploys from main branch automatically
-- Include a Dockerfile or Nixpacks-compatible setup
-- Port should be configurable via $PORT env var
-- Keep dependencies minimal — fewer moving parts = fewer things to break
+Maintain HUMAN_TASKS.md for anything requiring human hands:
+account signups, API key creation, DNS configuration, service provider
+decisions, OAuth app registration. Include clear step-by-step instructions.
+A human will work through this list on their own schedule.
